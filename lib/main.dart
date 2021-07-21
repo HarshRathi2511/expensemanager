@@ -38,7 +38,32 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver { //WidgetBindingObserver is a mixin
+
+ 
+  @override //to set up the listener 
+  void initState() {
+    
+    WidgetsBinding.instance.addObserver(this); //goes to the observer and calls didChangeAppLifeCycleMethod whenever app lifecycle changes
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) { //this method called whenever the app cycle changes 
+    
+    print(state); //check debug console
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override //to clear the listeners to lifecycle changes to avoid memory leaks 
+  void dispose() {
+   
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+
+
   final List<Transaction> _userTransactions = [
     // when using final the pointer to the object remains the same its not changed
     // Transaction(id: 't2', title: 'Watch', amount: 500.00, date: DateTime.now()),

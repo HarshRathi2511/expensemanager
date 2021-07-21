@@ -1,4 +1,6 @@
 //card widget of transactions
+import 'dart:math';
+
 import '../models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +18,21 @@ class TransactionList extends StatefulWidget {
 
 class _TransactionListState extends State<TransactionList> {
   @override
+ 
+ Color _bgColor;
+
+ void initState()
+ { 
+   //every list item should get a random color 
+   const availableColors=[Colors.red,Colors.blue,Colors.green];
+
+   _bgColor=availableColors[Random().nextInt(3)]; //uses dart.math //color is set before the build runs 
+
+   super.initState();
+ }
+
+
+
   Widget build(BuildContext context) {
     return Container(
       // height: MediaQuery.of(context).size.height*0.6, //already done in main
@@ -58,7 +75,7 @@ class _TransactionListState extends State<TransactionList> {
                       leading: CircleAvatar(
                         //leading is the element in the start
                         // foregroundColor: Colors.blueAccent,
-                        backgroundColor: Colors.blueAccent,
+                        backgroundColor: _bgColor,
                         child: Container(
                           padding: const EdgeInsets.all(3),
                           child: FittedBox(
